@@ -3,15 +3,39 @@ import {StyleSheet,SafeAreaView, Text} from 'react-native'
 import {Picker} from '@react-native-picker/picker';
 
 class App extends Component{
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      curso: 0,
+      cursos:[
+        {key: 1, nome: 'Administração'},
+        {key: 2, nome: 'Ciências Contábeis'},
+        {key: 3, nome: 'Sistemas de informação'}
+      ]
+    }
+  }
+
+
   render(){
+
+    let cursoItem = this.state.cursos.map((v, k)=>{
+      return <Picker.Item key={k} value={k} label={v.nome}/>
+    })
+
     return( 
-      <SafeAreaView style={styles.container} >
+      <SafeAreaView  >
        <Text style = {styles.titulo}>Selecione os Parâmentros</Text>
-       <Picker>
-         <Picker.Item key={1} value={1} label = "Daniel de Amorim"/>
+       <Picker
+        selectedValue={this.state.curso}
+        onValueChange={(itemValue, itemIndex) => this.setState({curso: itemValue})}
+        >
+          {cursoItem}
        </Picker>
        <Text style = {styles.relatorio}>Nome: Daniel de Amorim</Text>
        <Text style = {styles.relatorio}>Curso: Sistemas de Informacao</Text>
+       <Text >{this.state.cursos[this.state.curso].nome}</Text>
       </SafeAreaView>
     )   
   }
